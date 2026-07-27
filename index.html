@@ -32,40 +32,14 @@
             background-color: #0B5E90;
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
-        /* Hide scrollbar for clean modal look */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .image-preview-container {
-            width: 100%;
-            height: 200px;
-            border-radius: 0.5rem;
-            border: 2px dashed #cbd5e1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-            background-color: #f8fafc;
+            width: 100%; height: 200px; border-radius: 0.5rem; border: 2px dashed #cbd5e1;
+            display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; background-color: #f8fafc;
         }
-        .image-preview-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 10;
-        }
-        .image-preview-placeholder {
-            text-align: center;
-            color: #94a3b8;
-            z-index: 5;
-        }
+        .image-preview-container img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 10; }
+        .image-preview-placeholder { text-align: center; color: #94a3b8; z-index: 5; }
     </style>
 </head>
 <body class="font-sans text-gray-800 bg-gray-50 flex flex-col min-h-screen">
@@ -75,7 +49,6 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center gap-3">
-                        <!-- Mengganti logo dengan link dari Google Drive -->
                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center border-2 border-bps-blue overflow-hidden">
                             <img src="images.jpg" alt="Logo BPS" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/40x40/0B5E90/white?text=BPS'">
                         </div>
@@ -86,7 +59,6 @@
                     </div>
                 </div>
                 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#beranda" class="text-gray-700 hover:text-bps-blue font-medium transition-colors">Beranda</a>
                     <a href="#pengumuman" class="text-gray-700 hover:text-bps-blue font-medium transition-colors">Pengumuman</a>
@@ -97,32 +69,28 @@
                         <i class="fas fa-user-cog text-lg"></i>
                         <span id="admin-status-indicator" class="absolute top-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full hidden"></span>
                     </button>
-                    <button id="admin-logout-btn" onclick="handleLogout()" class="hidden text-red-500 hover:text-red-700 font-medium text-sm ml-2">
-                        Logout
-                    </button>
+                    <button id="admin-logout-btn" onclick="handleLogout()" class="hidden text-red-500 hover:text-red-700 font-medium text-sm ml-2">Logout</button>
                 </div>
 
-                <!-- Mobile Menu Button -->
                 <div class="flex items-center md:hidden gap-4">
                     <button id="mobile-admin-btn" onclick="openLoginModal()" class="text-gray-500 hover:text-bps-orange relative" title="Mode Admin">
                         <i class="fas fa-user-cog text-xl"></i>
                         <span id="mobile-admin-indicator" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full hidden"></span>
                     </button>
-                    <button type="button" id="mobile-menu-btn" class="text-gray-500 hover:text-bps-blue focus:outline-none focus:text-bps-blue" aria-label="Toggle menu">
+                    <button type="button" id="mobile-menu-btn" class="text-gray-500 hover:text-bps-blue focus:outline-none" aria-label="Toggle menu">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#beranda" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-bps-blue hover:bg-gray-50 mobile-link">Beranda</a>
-                <a href="#pengumuman" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-bps-blue hover:bg-gray-50 mobile-link">Pengumuman</a>
-                <a href="#jadwal" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-bps-blue hover:bg-gray-50 mobile-link">Jadwal</a>
-                <a href="#persyaratan" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-bps-blue hover:bg-gray-50 mobile-link">Persyaratan</a>
-                <a href="#kontak" class="block px-3 py-2 rounded-md text-base font-medium text-bps-blue bg-blue-50 hover:bg-blue-100 mobile-link">Hubungi Kami</a>
+                <a href="#beranda" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-bps-blue mobile-link">Beranda</a>
+                <a href="#pengumuman" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-bps-blue mobile-link">Pengumuman</a>
+                <a href="#jadwal" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-bps-blue mobile-link">Jadwal</a>
+                <a href="#persyaratan" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-bps-blue mobile-link">Persyaratan</a>
+                <a href="#kontak" class="block px-3 py-2 rounded-md text-base font-medium text-bps-blue bg-blue-50 mobile-link">Hubungi Kami</a>
                 <button id="mobile-logout-btn" onclick="handleLogout()" class="hidden w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50">Logout Admin</button>
             </div>
         </div>
@@ -133,19 +101,13 @@
             <span class="inline-block py-1 px-3 rounded-full bg-bps-orange text-white text-sm font-semibold tracking-wider mb-4 shadow-sm">
                 PERIODE TAHUN 2026
             </span>
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                Uji Kompetensi Jabatan Fungsional
-            </h1>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">Uji Kompetensi Jabatan Fungsional</h1>
             <p class="mt-4 max-w-2xl text-lg md:text-xl mx-auto text-blue-100 mb-10">
                 Pusat informasi resmi Jadwal, Syarat, Ketentuan dan Pengumuman Pelaksanaan Uji Kompetensi bagi Aparatur Sipil Negara di lingkungan BPS Provinsi Bengkulu.
             </p>
             <div class="flex justify-center gap-4 flex-col sm:flex-row">
-                <a href="#pengumuman" class="bg-white text-bps-blue px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors shadow-lg">
-                    Lihat Pengumuman Terbaru
-                </a>
-                <a href="#jadwal" class="bg-transparent border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-bps-blue transition-colors">
-                    Cek Jadwal
-                </a>
+                <a href="#pengumuman" class="bg-white text-bps-blue px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors shadow-lg">Lihat Pengumuman Terbaru</a>
+                <a href="#jadwal" class="bg-transparent border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-bps-blue transition-colors">Cek Jadwal</a>
             </div>
         </div>
     </section>
@@ -165,7 +127,7 @@
             </div>
 
             <div id="pengumuman-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Data Pengumuman akan dimuat secara dinamis -->
+                <!-- Data Pengumuman dimuat dari Database -->
             </div>
             
             <div id="empty-pengumuman" class="hidden text-center py-10 text-gray-500">
@@ -182,17 +144,14 @@
                     <h2 class="text-3xl font-bold text-bps-dark mb-4">Jadwal Pelaksanaan</h2>
                     <div class="w-20 h-1 bg-bps-blue rounded mb-6"></div>
                     <p class="text-gray-600 mb-6">
-                        Harap perhatikan dengan saksama jadwal pelaksanaan, Waktu dan Ruangan Uji Kompetensi anda agar tidak tertinggal informasi penting. Jadwal sewaktu-waktu dapat berubah sesuai kebijakan panitia seleksi.
+                        Harap perhatikan dengan saksama jadwal pelaksanaan, Waktu dan Ruangan Uji Kompetensi anda agar tidak tertinggal informasi penting.
                     </p>
                     <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
-                        <h4 class="font-bold text-bps-blue mb-2 flex items-center gap-2">
-                            <i class="fas fa-info-circle"></i> Catatan Penting
-                        </h4>
-                        <p class="text-sm text-gray-700">Seluruh tahapan seleksi menggunakan Waktu Indonesia Barat (WIB). Pastikan Anda datang 30 menit sebelum jadwal Ujian Kompetensi dimulai.</p>
+                        <h4 class="font-bold text-bps-blue mb-2 flex items-center gap-2"><i class="fas fa-info-circle"></i> Catatan Penting</h4>
+                        <p class="text-sm text-gray-700">Seluruh tahapan seleksi menggunakan Waktu Indonesia Barat (WIB).</p>
                     </div>
                 </div>
 
-                <!-- Timeline -->
                 <div class="lg:w-2/3 w-full">
                     <div id="admin-add-jadwal" class="hidden mb-6 flex justify-end">
                         <button onclick="openFormJadwal()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg font-semibold flex items-center gap-2 transition-colors shadow-sm">
@@ -201,7 +160,7 @@
                     </div>
 
                     <div id="jadwal-container" class="relative border-l-2 border-bps-blue/30 ml-4 lg:ml-8 space-y-8 pb-4">
-                        <!-- Data Jadwal akan dimuat secara dinamis -->
+                        <!-- Data Jadwal dimuat dari Database -->
                     </div>
                     
                     <div id="empty-jadwal" class="hidden text-center py-10 ml-8 text-gray-500">
@@ -218,65 +177,19 @@
                 <h2 class="text-3xl font-bold text-bps-dark mb-4">Persyaratan & Ketentuan Ujian</h2>
                 <div class="w-20 h-1 bg-bps-orange mx-auto rounded"></div>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Persyaratan Teknis -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-blue-100 text-bps-blue rounded-xl flex items-center justify-center text-2xl">
-                            <i class="fas fa-laptop-code"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-800">Persyaratan Teknis</h3>
-                    </div>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-arrow-right text-bps-orange mt-1"></i>
-                            <span class="text-gray-600"><strong>Perangkat Mandiri:</strong> Peserta diwajibkan membawa laptop pribadi yang telah dipastikan dalam kondisi prima dengan baterai yang terisi penuh untuk menjamin kelancaran pengerjaan soal.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-arrow-right text-bps-orange mt-1"></i>
-                            <span class="text-gray-600"><strong>Kedisiplinan Waktu:</strong> Peserta wajib hadir di lokasi ujian tepat waktu sesuai jadwal yang ditentukan. Keterlambatan dapat berdampak pada diskualifikasi kepesertaan.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-arrow-right text-bps-orange mt-1"></i>
-                            <span class="text-gray-600"><strong>Konektivitas Cadangan:</strong> Disarankan untuk menyiapkan modem atau perangkat tethering internet sebagai sarana cadangan guna mengantisipasi kendala teknis pada jaringan utama.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-arrow-right text-bps-orange mt-1"></i>
-                            <span class="text-gray-600"><strong>Integritas Ujian:</strong> Seluruh peserta berkomitmen untuk menjaga kejujuran dan mematuhi seluruh tata tertib yang telah ditetapkan oleh panitia seleksi.</span>
-                        </li>
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3"><i class="fas fa-laptop-code text-bps-blue"></i> Persyaratan Teknis</h3>
+                    <ul class="space-y-4 text-gray-600">
+                        <li>• Membawa laptop pribadi dalam kondisi prima.</li>
+                        <li>• Hadir tepat waktu sesuai jadwal yang ditentukan.</li>
                     </ul>
                 </div>
-
-                <!-- Syarat Uji Kompetensi -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-orange-100 text-bps-orange rounded-xl flex items-center justify-center text-2xl">
-                            <i class="fas fa-file-signature"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-800">Syarat Uji Kompetensi</h3>
-                    </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3"><i class="fas fa-file-signature text-bps-orange"></i> Syarat Uji Kompetensi</h3>
                     <ul class="space-y-4 text-gray-600">
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                            <span>Menduduki pangkat terakhir atau pangkat yang lebih tinggi pada jenjang Jabatan Fungsional sebelumnya.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                            <span>Memenuhi syarat angka kredit kumulatif atau melampirkan dokumen Penilaian Angka Kredit (PAK).</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                            <span>Memiliki kualifikasi pendidikan minimal Sarjana (S-1) atau S-1 Terapan yang linier dengan jabatan.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                            <span>Memiliki nilai Sasaran Kinerja Pegawai (SKP) dengan predikat minimal "Baik" dalam 1 (satu) tahun terakhir.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
-                            <span><strong>Kelengkapan Dokumen:</strong> Menyertakan salinan KTP, Kartu Pegawai, SK Pengangkatan Jabatan Terakhir, Ijazah, Pakta Integritas yang telah ditandatangani, serta dokumen persyaratan tambahan yang ditentukan oleh instansi.</span>
-                        </li>
+                        <li>• Menduduki pangkat terakhir atau memenuhi syarat jenjang.</li>
+                        <li>• Memiliki nilai SKP minimal "Baik" dalam 1 tahun terakhir.</li>
                     </ul>
                 </div>
             </div>
@@ -286,294 +199,114 @@
     <footer id="kontak" class="bg-bps-dark text-white pt-16 pb-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-                <!-- Branding -->
                 <div>
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center border-2 border-white overflow-hidden">
-                            <img src="https://drive.google.com/thumbnail?id=1o-wrjoJd9rJuvI5frLsLd8fm6fe5ASxP&sz=w200" alt="Logo BPS" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/40x40/white/0B5E90?text=BPS'">
-                        </div>
-                        <h1 class="font-bold text-xl leading-tight">BPS PROVINSI<br>BENGKULU</h1>
-                    </div>
-                    <p class="text-gray-400 text-sm mb-6">
-                        Website portal resmi untuk pusat informasi dan pengumuman terkait Pelaksanaan Uji Kompetensi Jabatan Fungsional di Lingkungan BPS Provinsi Bengkulu.
-                    </p>
+                    <h1 class="font-bold text-xl leading-tight mb-4">BPS PROVINSI BENGKULU</h1>
+                    <p class="text-gray-400 text-sm">Website portal resmi pusat informasi Uji Kompetensi Jabatan Fungsional.</p>
                 </div>
-
-                <!-- Quick Links -->
                 <div>
-                    <h3 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2 inline-block">Tautan Cepat</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#beranda" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Beranda</a></li>
-                        <li><a href="#pengumuman" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Pengumuman</a></li>
-                        <li><a href="#jadwal" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Jadwal Pelaksanaan</a></li>
-                        <li><a href="https://bengkulu.bps.go.id" target="_blank" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Website Resmi BPS Bengkulu</a></li>
+                    <h3 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2">Tautan Cepat</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#beranda" class="hover:text-white">Beranda</a></li>
+                        <li><a href="#pengumuman" class="hover:text-white">Pengumuman</a></li>
                     </ul>
                 </div>
-
-                <!-- Contact -->
                 <div>
-                    <h3 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2 inline-block">Hubungi Kami (Panitia)</h3>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-map-marker-alt text-bps-orange mt-1"></i>
-                            <span class="text-gray-400 text-sm">Badan Pusat Statistik Provinsi Bengkulu (BPS-Statistics Bengkulu Province) Jl. Adam Malik Km.8 Kota Bengkulu 38225</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fas fa-phone-alt text-bps-orange"></i>
-                            <span class="text-gray-400 text-sm">Telp (62-857) 58118-583</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fas fa-envelope text-bps-orange"></i>
-                            <span class="text-gray-400 text-sm">Mailbox : bengkulu@bps.go.id</span>
-                        </li>
-                    </ul>
+                    <h3 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2">Hubungi Kami</h3>
+                    <p class="text-gray-400 text-sm">Jl. Adam Malik Km.8 Kota Bengkulu 38225</p>
                 </div>
             </div>
-
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-gray-500 text-sm text-center md:text-left">
-                    &copy; 2026 Badan Pusat Statistik Provinsi Bengkulu. Hak Cipta Dilindungi Undang-Undang.
-                </p>
-                <div class="text-gray-500 text-sm">
-                    Tim IT & Kepegawaian BPS Provinsi Bengkulu
-                </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2026 Badan Pusat Statistik Provinsi Bengkulu. Hak Cipta Dilindungi.
             </div>
         </div>
     </footer>
 
-    <!-- Modal Background -->
+    <!-- Modals -->
     <div id="newsModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden flex items-center justify-center px-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 transform scale-95 transition-transform duration-300 relative max-h-[90vh] overflow-y-auto no-scrollbar">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center">
-                <i class="fas fa-times"></i>
-            </button>
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto no-scrollbar">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800"><i class="fas fa-times"></i></button>
             <div id="modalMeta" class="text-sm text-bps-orange font-semibold mb-2"></div>
-            <h3 id="modalTitle" class="text-2xl font-bold text-gray-900 mb-4 pr-6"></h3>
-            <div class="w-12 h-1 bg-bps-blue mb-6"></div>
+            <h3 id="modalTitle" class="text-2xl font-bold text-gray-900 mb-4"></h3>
             <div id="modalContent" class="text-gray-700 leading-relaxed space-y-4 whitespace-pre-line"></div>
-            <div class="mt-8 flex justify-end">
-                <button onclick="closeModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2 px-6 rounded-lg transition-colors">
-                    Tutup
-                </button>
-            </div>
         </div>
     </div>
 
     <!-- Form Pengumuman Modal -->
-    <div id="formPengumumanModal" class="fixed inset-0 bg-black bg-opacity-50 z-[70] hidden flex items-center justify-center px-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 transform scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto no-scrollbar relative">
-            <h3 id="formPTitle" class="text-2xl font-bold text-gray-900 mb-4">Tambah Pengumuman</h3>
-            <div class="w-12 h-1 bg-bps-blue mb-6"></div>
+    <div id="formPengumumanModal" class="fixed inset-0 bg-black bg-opacity-50 z-[70] hidden flex items-center justify-center px-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-2xl font-bold mb-4">Tambah / Edit Pengumuman</h3>
             <form id="formPengumuman" onsubmit="savePengumuman(event)" class="space-y-4">
                 <input type="hidden" id="p_id">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                        <input type="text" id="p_date" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Contoh: 24 Juli 2026">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                        <input type="text" id="p_category" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Contoh: Pengumuman">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Label Tag (Opsional - misal: PENTING)</label>
-                    <input type="text" id="p_tag" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Kosongkan jika tidak perlu">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Judul Utama</label>
-                    <input type="text" id="p_title" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Judul berita/pengumuman">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Foto / Gambar Pendukung (Opsional)</label>
-                    <input type="file" id="p_image_input" accept="image/*" class="w-full border border-gray-300 rounded-lg p-2.5 mb-2 focus:ring-bps-blue focus:border-bps-blue text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-bps-blue hover:file:bg-blue-100" onchange="previewImage(event)">
-                    <input type="hidden" id="p_image_base64">
-                    <div class="image-preview-container" id="p_image_preview_container">
-                        <div class="image-preview-placeholder" id="p_image_placeholder">
-                            <i class="fas fa-image text-3xl mb-2"></i>
-                            <p class="text-sm">Preview Gambar</p>
-                        </div>
-                        <img id="p_image_preview" src="" alt="Preview" class="hidden">
-                        <button type="button" id="p_image_remove" class="hidden absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600 transition-colors z-20 shadow-md" onclick="removeImage()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Ringkasan (Tampil di Card)</label>
-                    <textarea id="p_summary" required rows="2" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Ringkasan singkat..."></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Konten Lengkap (Tampil di Popup)</label>
-                    <textarea id="p_content" required rows="6" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Isi detail pengumuman..."></textarea>
-                </div>
-                <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-100">
-                    <button type="button" onclick="closeFormPengumuman()" class="px-5 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors">Batal</button>
-                    <button type="submit" class="px-6 py-2 text-white bg-bps-blue hover:bg-blue-800 rounded-lg font-medium transition-colors shadow-sm">Simpan</button>
-                </div>
+                <div><label class="block text-sm font-medium">Tanggal</label><input type="text" id="p_date" required class="w-full border p-2.5 rounded"></div>
+                <div><label class="block text-sm font-medium">Kategori</label><input type="text" id="p_category" required class="w-full border p-2.5 rounded"></div>
+                <div><label class="block text-sm font-medium">Judul</label><input type="text" id="p_title" required class="w-full border p-2.5 rounded"></div>
+                <div><label class="block text-sm font-medium">Ringkasan</label><textarea id="p_summary" required class="w-full border p-2.5 rounded"></textarea></div>
+                <div><label class="block text-sm font-medium">Konten Lengkap</label><textarea id="p_content" required rows="5" class="w-full border p-2.5 rounded"></textarea></div>
+                <div class="flex justify-end gap-3"><button type="button" onclick="closeFormPengumuman()" class="px-4 py-2 bg-gray-100 rounded">Batal</button><button type="submit" class="px-6 py-2 bg-bps-blue text-white rounded">Simpan</button></div>
             </form>
         </div>
     </div>
 
     <!-- Form Jadwal Modal -->
-    <div id="formJadwalModal" class="fixed inset-0 bg-black bg-opacity-50 z-[70] hidden flex items-center justify-center px-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 transform scale-95 transition-transform duration-300 relative">
-            <h3 id="formJTitle" class="text-2xl font-bold text-gray-900 mb-4">Tambah Jadwal</h3>
-            <div class="w-12 h-1 bg-bps-orange mb-6"></div>
+    <div id="formJadwalModal" class="fixed inset-0 bg-black bg-opacity-50 z-[70] hidden flex items-center justify-center px-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8">
+            <h3 class="text-2xl font-bold mb-4">Tambah / Edit Jadwal</h3>
             <form id="formJadwal" onsubmit="saveJadwal(event)" class="space-y-4">
                 <input type="hidden" id="j_id">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Waktu Pelaksanaan</label>
-                    <input type="text" id="j_date" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Contoh: 12 - 15 Agustus 2026">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Kegiatan</label>
-                    <input type="text" id="j_title" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Nama tahapan...">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Tempat atau Ruangan</label>
-                    <textarea id="j_desc" required rows="3" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Isikan Ruang dan Tempat dengan Jelas..."></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Status (Warna Indikator)</label>
-                    <select id="j_color" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue">
-                        <option value="bps-orange">Sedang Berlangsung / Mendesak (Oranye)</option>
-                        <option value="bps-blue">Akan Datang / Aktif (Biru)</option>
-                        <option value="gray-400">Selesai / Menunggu (Abu-abu)</option>
-                    </select>
-                </div>
-                <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-100">
-                    <button type="button" onclick="closeFormJadwal()" class="px-5 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors">Batal</button>
-                    <button type="submit" class="px-6 py-2 text-white bg-bps-blue hover:bg-blue-800 rounded-lg font-medium transition-colors shadow-sm">Simpan</button>
-                </div>
+                <div><label class="block text-sm font-medium">Rentang Tanggal</label><input type="text" id="j_date" required class="w-full border p-2.5 rounded"></div>
+                <div><label class="block text-sm font-medium">Nama Kegiatan</label><input type="text" id="j_title" required class="w-full border p-2.5 rounded"></div>
+                <div><label class="block text-sm font-medium">Deskripsi / Ruangan</label><textarea id="j_desc" required class="w-full border p-2.5 rounded"></textarea></div>
+                <div class="flex justify-end gap-3"><button type="button" onclick="closeFormJadwal()" class="px-4 py-2 bg-gray-100 rounded">Batal</button><button type="submit" class="px-6 py-2 bg-bps-blue text-white rounded">Simpan</button></div>
             </form>
         </div>
     </div>
 
     <!-- Login Modal -->
-    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 z-[80] hidden flex items-center justify-center px-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 sm:p-8 transform scale-95 transition-transform duration-300 relative">
-            <h3 class="text-2xl font-bold text-gray-900 mb-2">Login Admin</h3>
-            <p class="text-gray-500 text-sm mb-6">Masukkan Username dan Password)</p>
-            <div class="w-12 h-1 bg-bps-blue mb-6"></div>
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 z-[80] hidden flex items-center justify-center px-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 sm:p-8">
+            <h3 class="text-2xl font-bold mb-2">Login Admin</h3>
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                    <input type="text" id="login_username" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" autocomplete="username">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input type="password" id="login_password" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" autocomplete="current-password">
-                    <p id="login_error" class="text-red-500 text-sm mt-2 hidden"><i class="fas fa-exclamation-circle"></i> Username atau password salah.</p>
-                </div>
-                <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-100">
-                    <button type="button" onclick="closeLoginModal()" class="px-5 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors">Batal</button>
-                    <button type="submit" class="px-6 py-2 text-white bg-bps-blue hover:bg-blue-800 rounded-lg font-medium transition-colors shadow-sm">Masuk</button>
-                </div>
+                <div><label class="block text-sm">Username</label><input type="text" id="login_username" required class="w-full border p-2.5 rounded"></div>
+                <div><label class="block text-sm">Password</label><input type="password" id="login_password" required class="w-full border p-2.5 rounded"></div>
+                <div class="flex justify-end gap-3"><button type="button" onclick="closeLoginModal()" class="px-4 py-2 bg-gray-100 rounded">Batal</button><button type="submit" class="px-6 py-2 bg-bps-blue text-white rounded">Masuk</button></div>
             </form>
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-y-24 opacity-0 transition-all duration-300 bg-gray-900 text-white px-6 py-3.5 rounded-xl shadow-2xl flex items-center gap-3">
         <i id="toast-icon" class="fas fa-check-circle text-green-400 text-xl"></i>
         <span id="toast-msg" class="font-medium"></span>
     </div>
 
     <script>
-        // State & Data Aplikasi (In-Memory)
+        // Masukkan Web App URL dari Google Apps Script Anda di sini
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzC6nsik551EIrFOQ_fw30CEYrDs_5D7jv6vBvKHVUnhVlQI8Y4IOQ938XQ3ZKCXM2O/exec";
+
         let isAdmin = false;
-        
-        // Data Dummy Pengumuman
-        let pengumumanList = [
-            {
-                id: 1,
-                date: '24 Juli 2026', 
-                category: 'Pengumuman', 
-                tag: 'PENTING',
-                title: 'Pendaftaran Uji Kompetensi Periode II Tahun 2026 Resmi Dibuka',
-                summary: 'BPS Provinsi Bengkulu mengundang seluruh pegawai yang memenuhi syarat untuk mendaftarkan diri pada Uji Kompetensi Kenaikan Jenjang (UKKJ) dan Perpindahan Jabatan (UKPJ)...',
-                content: 'Pendaftaran telah dibuka mulai tanggal 25 Juli hingga 10 Agustus 2026.\n\nSilakan siapkan dokumen persyaratan dan daftarkan diri melalui pimpinan satuan kerja masing-masing atau melalui tautan internal kepegawaian BPS. Pastikan seluruh dokumen legalisir diserahkan ke Subbagian Umum BPS Provinsi Bengkulu sebelum batas akhir penutupan.\n\nDemikian pengumuman ini disampaikan agar menjadi perhatian.',
-                image: ''
-            },
-            {
-                id: 2,
-                date: '20 Juli 2026', 
-                category: 'Berita', 
-                tag: '',
-                title: 'Sosialisasi Tata Cara Pengisian Portofolio Ujian',
-                summary: 'Telah dilaksanakan sosialisasi pengisian portofolio uji kompetensi secara daring. Bagi yang berhalangan hadir dapat mengunduh materi di tautan berikut.',
-                content: 'Pada tanggal 20 Juli 2026, Tim Kepegawaian BPS Provinsi Bengkulu telah menyelenggarakan sosialisasi pengisian dokumen portofolio bagi calon peserta uji kompetensi.\n\nMateri sosialisasi mencakup:\n- Cara mengukur beban kerja fungsional\n- Cara pemberkasan SKP\n- Standar penilaian wawancara kompetensi manajerial\n\nUntuk mengunduh materi presentasi, silakan hubungi bagian kepegawaian.',
-                image: ''
-            },
-            {
-                id: 3,
-                date: '10 Juli 2026', 
-                category: 'Info Teknis', 
-                tag: 'INFO',
-                title: 'Panduan Teknis Pelaksanaan Ujian Computer Assisted Test (CAT)',
-                summary: 'Ujian akan dilaksanakan menggunakan sistem CAT. Peserta wajib membaca buku panduan teknis yang telah diterbitkan panitia pusat.',
-                content: 'Seluruh peserta Uji Kompetensi diwajibkan untuk mengikuti tahapan tes tertulis menggunakan metode CAT (Computer Assisted Test).\n\nSistem ini menjamin objektivitas dan transparansi hasil ujian. Peserta dilarang membawa alat komunikasi dalam bentuk apapun ke dalam ruang ujian. Waktu pengerjaan soal adalah 90 menit.',
-                image: ''
-            }
-        ];
+        let pengumumanList = [];
+        let jadwalList = [];
 
-        // Data Dummy Jadwal
-        let jadwalList = [
-            {
-                id: 1,
-                date: '25 Jul - 10 Ags 2026',
-                title: 'Pendaftaran dan Penerimaan Berkas',
-                desc: 'Penerimaan berkas pendaftaran peserta secara fisik dan digital oleh panitia BPS Provinsi Bengkulu.',
-                color: 'bps-orange' // Oranye: sedang berlangsung/mendesak
-            },
-            {
-                id: 2,
-                date: '15 Agustus 2026',
-                title: 'Pengumuman Seleksi Administrasi',
-                desc: 'Pengumuman daftar peserta yang lulus tahap verifikasi berkas administrasi dan berhak mengikuti Ujian Tertulis.',
-                color: 'bps-blue' // Biru: akan datang
-            },
-            {
-                id: 3,
-                date: '20 - 22 Agustus 2026',
-                title: 'Pelaksanaan Ujian Tertulis & Wawancara',
-                desc: 'Ujian diselenggarakan di Gedung BPS Provinsi Bengkulu, terbagi dalam beberapa sesi sesuai jadwal masing-masing peserta.',
-                color: 'gray-400' // Abu-abu: Belum aktif / masa depan
-            }
-        ];
-
-        
-        // Setup Navigasi Mobile
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-
-        // Setup Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('main-nav');
-            if (window.scrollY > 10) {
-                nav.classList.add('shadow-lg', 'py-1');
-            } else {
-                nav.classList.remove('shadow-lg', 'py-1');
-            }
-        });
-
-        // Saat halaman pertama dimuat
+        // Tarik Data dari Database Google Sheets saat halaman dimuat
         document.addEventListener('DOMContentLoaded', () => {
-            renderPengumuman();
-            renderJadwal();
+            muatDataDariDatabase();
         });
+
+        async function muatDataDariDatabase() {
+            try {
+                // Ambil Berita
+                let resB = await fetch(WEB_APP_URL + "?jenis=berita");
+                pengumumanList = await resB.json();
+                renderPengumuman();
+
+                // Ambil Jadwal
+                let resJ = await fetch(WEB_APP_URL + "?jenis=jadwal");
+                jadwalList = await resJ.json();
+                renderJadwal();
+            } catch (error) {
+                console.error("Gagal terhubung ke database:", error);
+                showToast("Gagal memuat database online", "error");
+            }
+        }
 
         function renderPengumuman() {
             const container = document.getElementById('pengumuman-container');
@@ -584,46 +317,21 @@
                 emptyState.classList.remove('hidden');
             } else {
                 emptyState.classList.add('hidden');
-                
                 pengumumanList.forEach(item => {
-                    const tagHtml = item.tag ? `<span class="bg-red-100 text-red-600 px-2 py-0.5 rounded text-xs font-bold ml-2">${item.tag}</span>` : '';
-                    const imageHtml = item.image ? `<div class="w-full h-48 bg-gray-200 overflow-hidden shrink-0"><img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover"></div>` : '';
-                    
-                    // Template Card
                     const card = document.createElement('div');
-                    card.className = 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full relative';
+                    card.className = 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all p-6 flex flex-col h-full relative';
                     
-                    // Admin controls
-                    const adminControls = isAdmin ? `
-                        <div class="absolute top-4 right-4 flex gap-2 z-20">
-                            <button onclick="openFormPengumuman(${item.id})" class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-200 transition-colors shadow-sm" title="Edit">
-                                <i class="fas fa-edit text-sm"></i>
-                            </button>
-                            <button onclick="deletePengumuman(${item.id})" class="bg-red-100 text-red-600 w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-200 transition-colors shadow-sm" title="Hapus">
-                                <i class="fas fa-trash text-sm"></i>
-                            </button>
-                        </div>
-                    ` : '';
-
                     card.innerHTML = `
-                        ${adminControls}
-                        ${imageHtml}
-                        <div class="p-6 md:p-8 flex flex-col flex-grow">
-                            <div class="flex items-center text-sm text-gray-500 mb-4 font-medium">
-                                <span class="text-bps-orange mr-2"><i class="fas fa-calendar-alt"></i></span>
-                                ${item.date} 
-                                <span class="mx-2">•</span> 
-                                <span class="text-bps-blue">${item.category}</span>
-                                ${tagHtml}
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3 leading-snug line-clamp-2 ${item.image ? '' : 'pr-12'}">${item.title}</h3>
-                            <p class="text-gray-600 mb-6 line-clamp-3 text-sm flex-grow">${item.summary}</p>
-                            <div class="mt-auto pt-4 border-t border-gray-100">
-                                <button onclick="showNewsModal(${item.id})" class="text-bps-blue font-semibold hover:text-bps-orange transition-colors flex items-center gap-2 group">
-                                    Baca Selengkapnya 
-                                    <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-                                </button>
-                            </div>
+                        <div class="flex items-center text-sm text-gray-500 mb-4 font-medium">
+                            <span class="text-bps-orange mr-2"><i class="fas fa-calendar-alt"></i></span> ${item.Tanggal || item.tanggal} 
+                            <span class="mx-2">•</span> <span class="text-bps-blue">${item.Kategori || item.kategori}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">${item.Judul || item.judul}</h3>
+                        <p class="text-gray-600 mb-6 text-sm flex-grow">${item.Konten ? item.Konten.substring(0, 100) : ''}...</p>
+                        <div class="mt-auto pt-4 border-t border-gray-100">
+                            <button onclick="showNewsModal('${item.ID || item.id}')" class="text-bps-blue font-semibold hover:text-bps-orange flex items-center gap-2">
+                                Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                            </button>
                         </div>
                     `;
                     container.appendChild(card);
@@ -640,32 +348,15 @@
                 emptyState.classList.remove('hidden');
             } else {
                 emptyState.classList.add('hidden');
-
                 jadwalList.forEach(item => {
                     const card = document.createElement('div');
                     card.className = 'relative group';
-                    
-                    // Admin controls
-                    const adminControls = isAdmin ? `
-                        <div class="absolute right-0 top-0 flex gap-2">
-                            <button onclick="openFormJadwal(${item.id})" class="text-gray-400 hover:text-blue-500 transition-colors" title="Edit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button onclick="deleteJadwal(${item.id})" class="text-gray-400 hover:text-red-500 transition-colors" title="Hapus">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    ` : '';
-
                     card.innerHTML = `
-                        <!-- Dot Indicator -->
-                        <div class="absolute -left-[21px] lg:-left-[41px] mt-1.5 w-4 h-4 rounded-full bg-${item.color} border-4 border-white shadow"></div>
-                        
-                        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                            ${adminControls}
-                            <span class="text-sm font-bold text-${item.color} mb-2 block tracking-wide">${item.date}</span>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2 pr-16">${item.title}</h3>
-                            <p class="text-gray-600">${item.desc}</p>
+                        <div class="absolute -left-[21px] lg:-left-[41px] mt-1.5 w-4 h-4 rounded-full bg-bps-blue border-4 border-white shadow"></div>
+                        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                            <span class="text-sm font-bold text-bps-blue mb-2 block">${item['Rentang Tanggal'] || item.rentang_tanggal}</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">${item['Nama Kegiatan'] || item.nama_kegiatan}</h3>
+                            <p class="text-gray-600">${item.Deskripsi || item.deskripsi}</p>
                         </div>
                     `;
                     container.appendChild(card);
@@ -673,307 +364,92 @@
             }
         }
 
-        const loginModal = document.getElementById('loginModal');
-        
-        function openLoginModal() {
-            if (isAdmin) {
-                // If already admin, don't open login, maybe jump to top or do nothing.
-                showToast('Anda sudah login sebagai Admin', 'info');
-                return;
-            }
-            document.getElementById('login_error').classList.add('hidden');
-            document.getElementById('loginForm').reset();
-            toggleModalClass(loginModal, true);
-        }
-
-        function closeLoginModal() {
-            toggleModalClass(loginModal, false);
-        }
+        function openLoginModal() { toggleModal(document.getElementById('loginModal'), true); }
+        function closeLoginModal() { toggleModal(document.getElementById('loginModal'), false); }
 
         function handleLogin(e) {
             e.preventDefault();
-            const user = document.getElementById('login_username').value;
-            const pass = document.getElementById('login_password').value;
-
-            // Dummy Authentication (admin / admin)
-            if (user === 'admin' && pass === '@bps_1700') {
+            if (document.getElementById('login_username').value === 'admin' && document.getElementById('login_password').value === '@bps_1700') {
                 isAdmin = true;
                 closeLoginModal();
-                updateAdminUI();
-                showToast('Login berhasil! Mode Admin aktif.', 'success');
+                document.getElementById('admin-add-pengumuman').classList.remove('hidden');
+                document.getElementById('admin-add-jadwal').classList.remove('hidden');
+                document.getElementById('admin-status-indicator').classList.remove('hidden');
+                document.getElementById('admin-logout-btn').classList.remove('hidden');
+                showToast('Login Admin Berhasil!', 'success');
             } else {
-                document.getElementById('login_error').classList.remove('hidden');
+                alert('Username atau password salah!');
             }
         }
 
         function handleLogout() {
             isAdmin = false;
-            updateAdminUI();
-            showToast('Anda telah logout dari Mode Admin.', 'info');
+            document.getElementById('admin-add-pengumuman').classList.add('hidden');
+            document.getElementById('admin-add-jadwal').classList.add('hidden');
+            document.getElementById('admin-status-indicator').classList.add('hidden');
+            document.getElementById('admin-logout-btn').classList.add('hidden');
+            showToast('Logout Berhasil', 'info');
         }
 
-        function updateAdminUI() {
-            // Tampilkan/Sembunyikan tombol add global
-            document.getElementById('admin-add-pengumuman').classList.toggle('hidden', !isAdmin);
-            document.getElementById('admin-add-jadwal').classList.toggle('hidden', !isAdmin);
-            
-            // Indicator di Navbar
-            document.getElementById('admin-status-indicator').classList.toggle('hidden', !isAdmin);
-            document.getElementById('mobile-admin-indicator').classList.toggle('hidden', !isAdmin);
-            
-            // Tombol Logout
-            document.getElementById('admin-logout-btn').classList.toggle('hidden', !isAdmin);
-            document.getElementById('mobile-logout-btn').classList.toggle('hidden', !isAdmin);
-            
-            // Ubah fungsi tombol admin gear di navbar
-            document.getElementById('admin-toggle-btn').onclick = isAdmin ? null : openLoginModal;
-            document.getElementById('mobile-admin-btn').onclick = isAdmin ? null : openLoginModal;
+        function openFormPengumuman() { toggleModal(document.getElementById('formPengumumanModal'), true); }
+        function closeFormPengumuman() { toggleModal(document.getElementById('formPengumumanModal'), false); }
 
-            // Re-render konten untuk memunculkan tombol edit/delete di card
-            renderPengumuman();
-            renderJadwal();
-        }
-
-        
-        // Helper Transisi Modal
-        function toggleModalClass(el, show) {
-            const inner = el.querySelector('div');
-            if (show) {
-                el.classList.remove('hidden');
-                // reflow
-                void el.offsetWidth;
-                el.classList.remove('opacity-0');
-                inner.classList.remove('scale-95');
-                inner.classList.add('scale-100');
-                document.body.style.overflow = 'hidden';
-            } else {
-                el.classList.add('opacity-0');
-                inner.classList.remove('scale-100');
-                inner.classList.add('scale-95');
-                setTimeout(() => {
-                    el.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                }, 300);
-            }
-        }
-
-        // Modal Baca Berita
-        const newsModal = document.getElementById('newsModal');
-        
-        function showNewsModal(id) {
-            const item = pengumumanList.find(p => p.id === id);
-            if(item) {
-                document.getElementById('modalMeta').textContent = `${item.date} • ${item.category}`;
-                document.getElementById('modalTitle').textContent = item.title;
-                
-                let contentHtml = '';
-                if(item.image) {
-                    contentHtml += `<img src="${item.image}" alt="${item.title}" class="w-full h-auto rounded-lg mb-6 max-h-96 object-cover">`;
-                }
-                contentHtml += `<div class="text-gray-700 leading-relaxed space-y-4 whitespace-pre-line">${item.content}</div>`;
-                
-                document.getElementById('modalContent').innerHTML = contentHtml;
-                toggleModalClass(newsModal, true);
-            }
-        }
-
-        function closeModal() {
-            toggleModalClass(newsModal, false);
-        }
-
-        // Klik luar modal untuk menutup
-        [newsModal, loginModal, document.getElementById('formPengumumanModal'), document.getElementById('formJadwalModal')].forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    toggleModalClass(modal, false);
-                }
-            });
-        });
-
-        // --- CRUD PENGUMUMAN ---
-        const formPModal = document.getElementById('formPengumumanModal');
-        
-        function previewImage(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                const base64String = e.target.result;
-                document.getElementById('p_image_base64').value = base64String;
-                
-                const previewImg = document.getElementById('p_image_preview');
-                previewImg.src = base64String;
-                previewImg.classList.remove('hidden');
-                
-                document.getElementById('p_image_placeholder').classList.add('hidden');
-                document.getElementById('p_image_remove').classList.remove('hidden');
-            }
-            
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function removeImage() {
-            document.getElementById('p_image_input').value = '';
-            document.getElementById('p_image_base64').value = '';
-            
-            const previewImg = document.getElementById('p_image_preview');
-            previewImg.src = '';
-            previewImg.classList.add('hidden');
-            
-            document.getElementById('p_image_placeholder').classList.remove('hidden');
-            document.getElementById('p_image_remove').classList.add('hidden');
-        }
-
-        function openFormPengumuman(id = null) {
-            document.getElementById('formPengumuman').reset();
-            document.getElementById('p_id').value = '';
-            document.getElementById('formPTitle').textContent = 'Tambah Pengumuman Baru';
-            removeImage(); // Clear image preview
-
-            if (id) {
-                const item = pengumumanList.find(p => p.id === id);
-                if (item) {
-                    document.getElementById('formPTitle').textContent = 'Edit Pengumuman';
-                    document.getElementById('p_id').value = item.id;
-                    document.getElementById('p_date').value = item.date;
-                    document.getElementById('p_category').value = item.category;
-                    document.getElementById('p_tag').value = item.tag;
-                    document.getElementById('p_title').value = item.title;
-                    document.getElementById('p_summary').value = item.summary;
-                    document.getElementById('p_content').value = item.content;
-                    
-                    if (item.image) {
-                        document.getElementById('p_image_base64').value = item.image;
-                        const previewImg = document.getElementById('p_image_preview');
-                        previewImg.src = item.image;
-                        previewImg.classList.remove('hidden');
-                        document.getElementById('p_image_placeholder').classList.add('hidden');
-                        document.getElementById('p_image_remove').classList.remove('hidden');
-                    }
-                }
-            }
-            toggleModalClass(formPModal, true);
-        }
-
-        function closeFormPengumuman() {
-            toggleModalClass(formPModal, false);
-        }
-
-        function savePengumuman(e) {
+        async function savePengumuman(e) {
             e.preventDefault();
-            const id = document.getElementById('p_id').value;
-            const item = {
-                id: id ? parseInt(id) : Date.now(),
-                date: document.getElementById('p_date').value,
-                category: document.getElementById('p_category').value,
-                tag: document.getElementById('p_tag').value,
-                title: document.getElementById('p_title').value,
-                summary: document.getElementById('p_summary').value,
-                content: document.getElementById('p_content').value,
-                image: document.getElementById('p_image_base64').value // Save image data
+            let payload = {
+                jenis: "berita",
+                tanggal: document.getElementById('p_date').value,
+                kategori: document.getElementById('p_category').value,
+                judul: document.getElementById('p_title').value,
+                konten: document.getElementById('p_content').value
             };
 
-            if (id) {
-                const idx = pengumumanList.findIndex(p => p.id === parseInt(id));
-                pengumumanList[idx] = item;
-                showToast('Pengumuman berhasil diperbarui', 'success');
-            } else {
-                pengumumanList.unshift(item); // tambah di awal
-                showToast('Pengumuman baru berhasil ditambahkan', 'success');
-            }
-
+            showToast("Menyimpan ke Google Sheets...", "info");
+            await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
             closeFormPengumuman();
-            renderPengumuman();
+            showToast("Berita berhasil tersimpan permanen!", "success");
+            muatDataDariDatabase(); // Refresh data
         }
 
-        function deletePengumuman(id) {
-            // Karena tidak boleh pakai confirm() native, kita buat fungsi langsung hapus dengan toast
-            pengumumanList = pengumumanList.filter(p => p.id !== id);
-            renderPengumuman();
-            showToast('Pengumuman berhasil dihapus', 'info');
-        }
+        function openFormJadwal() { toggleModal(document.getElementById('formJadwalModal'), true); }
+        function closeFormJadwal() { toggleModal(document.getElementById('formJadwalModal'), false); }
 
-        // --- CRUD JADWAL ---
-        const formJModal = document.getElementById('formJadwalModal');
-        
-        function openFormJadwal(id = null) {
-            document.getElementById('formJadwal').reset();
-            document.getElementById('j_id').value = '';
-            document.getElementById('formJTitle').textContent = 'Tambah Jadwal Baru';
-
-            if (id) {
-                const item = jadwalList.find(j => j.id === id);
-                if (item) {
-                    document.getElementById('formJTitle').textContent = 'Edit Jadwal';
-                    document.getElementById('j_id').value = item.id;
-                    document.getElementById('j_date').value = item.date;
-                    document.getElementById('j_title').value = item.title;
-                    document.getElementById('j_desc').value = item.desc;
-                    document.getElementById('j_color').value = item.color;
-                }
-            }
-            toggleModalClass(formJModal, true);
-        }
-
-        function closeFormJadwal() {
-            toggleModalClass(formJModal, false);
-        }
-
-        function saveJadwal(e) {
+        async function saveJadwal(e) {
             e.preventDefault();
-            const id = document.getElementById('j_id').value;
-            const item = {
-                id: id ? parseInt(id) : Date.now(),
-                date: document.getElementById('j_date').value,
-                title: document.getElementById('j_title').value,
-                desc: document.getElementById('j_desc').value,
-                color: document.getElementById('j_color').value,
+            let payload = {
+                jenis: "jadwal",
+                rentang_tanggal: document.getElementById('j_date').value,
+                nama_kegiatan: document.getElementById('j_title').value,
+                deskripsi: document.getElementById('j_desc').value
             };
 
-            if (id) {
-                const idx = jadwalList.findIndex(j => j.id === parseInt(id));
-                jadwalList[idx] = item;
-                showToast('Jadwal berhasil diperbarui', 'success');
-            } else {
-                jadwalList.push(item);
-                showToast('Jadwal baru berhasil ditambahkan', 'success');
-            }
-
+            showToast("Menyimpan ke Google Sheets...", "info");
+            await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
             closeFormJadwal();
-            renderJadwal();
+            showToast("Jadwal berhasil tersimpan permanen!", "success");
+            muatDataDariDatabase(); // Refresh data
         }
 
-        function deleteJadwal(id) {
-            jadwalList = jadwalList.filter(j => j.id !== id);
-            renderJadwal();
-            showToast('Jadwal berhasil dihapus', 'info');
+        function showNewsModal(id) {
+            const item = pengumumanList.find(p => (p.ID == id || p.id == id));
+            if (item) {
+                document.getElementById('modalMeta').textContent = `${item.Tanggal || item.tanggal} • ${item.Kategori || item.kategori}`;
+                document.getElementById('modalTitle').textContent = item.Judul || item.judul;
+                document.getElementById('modalContent').textContent = item.Konten || item.konten;
+                toggleModal(document.getElementById('newsModal'), true);
+            }
+        }
+        function closeModal() { toggleModal(document.getElementById('newsModal'), false); }
+
+        function toggleModal(el, show) {
+            if(show) { el.classList.remove('hidden'); } else { el.classList.add('hidden'); }
         }
 
-        let toastTimeout;
         function showToast(msg, type = 'success') {
             const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toast-msg');
-            const toastIcon = document.getElementById('toast-icon');
-
-            toastMsg.textContent = msg;
-            
-            // Atur icon berdasarkan tipe
-            if(type === 'success') {
-                toastIcon.className = 'fas fa-check-circle text-green-400 text-xl';
-            } else if(type === 'info') {
-                toastIcon.className = 'fas fa-info-circle text-blue-400 text-xl';
-            } else if(type === 'error') {
-                toastIcon.className = 'fas fa-exclamation-circle text-red-400 text-xl';
-            }
-
+            document.getElementById('toast-msg').textContent = msg;
             toast.classList.remove('translate-y-24', 'opacity-0');
-            
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
+            setTimeout(() => { toast.classList.add('translate-y-24', 'opacity-0'); }, 3000);
         }
     </script>
 </body>
