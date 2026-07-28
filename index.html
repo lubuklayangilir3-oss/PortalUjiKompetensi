@@ -66,6 +66,12 @@
             color: #94a3b8;
             z-index: 5;
         }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="font-sans text-gray-800 bg-gray-50 flex flex-col min-h-screen">
@@ -76,7 +82,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center gap-3">
                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center border-2 border-bps-blue overflow-hidden">
-                            <img src="https://drive.google.com/thumbnail?id=1o-wrjoJd9rJuvI5frLsLd8fm6fe5ASxP&sz=w200" alt="Logo BPS" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/40x40/0B5E90/white?text=BPS'">
+                            <img src="images.jpg" class="w-8 h-8 object-contain">
                         </div>
                         <div>
                             <h1 class="font-bold text-bps-blue text-lg leading-tight">BPS PROVINSI BENGKULU</h1>
@@ -129,7 +135,7 @@
 
     <div id="backend-status-banner" class="mt-20 bg-amber-100 border-b border-amber-200 text-amber-800 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
         <i class="fas fa-database text-amber-600"></i>
-        <span><strong>Status Penyimpanan:</strong> Menggunakan penyimpanan Lokal Browser (Demo Mode). Masukkan URL Apps Script untuk mengaktifkan Cloud Database.</span>
+        <span id="backend-status-text"><strong>Status Penyimpanan:</strong> Belum terhubung ke Web App API. Masukkan SCRIPT_URL di dalam kode.</span>
     </div>
 
     <section id="beranda" class="hero-pattern pt-16 pb-20 lg:pt-24 lg:pb-28 text-white">
@@ -299,7 +305,7 @@
                 <div>
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center border-2 border-white overflow-hidden">
-                            <img src="https://drive.google.com/thumbnail?id=1o-wrjoJd9rJuvI5frLsLd8fm6fe5ASxP&sz=w200" alt="Logo BPS" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/40x40/white/0B5E90?text=BPS'">
+                            <img src="https://placehold.co/40x40/white/0B5E90?text=BPS" alt="Logo BPS" class="w-8 h-8 object-contain">
                         </div>
                         <h1 class="font-bold text-xl leading-tight">BPS PROVINSI<br>BENGKULU</h1>
                     </div>
@@ -365,7 +371,7 @@
             <div id="modalCertContainer" class="mt-6 hidden pt-4 border-t border-gray-100">
                 <a id="modalCertLink" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-5 rounded-lg shadow-sm transition-all transform hover:-translate-y-0.5">
                     <i class="fas fa-file-download text-lg"></i>
-                    <span>Sertifikat Bisa di Unduh disini</span>
+                    <span>Tautan Lampiran / Sertifikat</span>
                     <i class="fas fa-external-link-alt text-xs ml-1 opacity-80"></i>
                 </a>
             </div>
@@ -465,231 +471,173 @@
                         <input type="text" id="j_date" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Contoh: 12 - 15 Agustus 2026">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Waktu Pelaksanaan (WIB)</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Waktu (WIB)</label>
                         <input type="text" id="j_time" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Contoh: 08.00 - 16.00 WIB">
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Nama Kegiatan</label>
-                    <input type="text" id="j_title" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Nama tahapan...">
+                    <input type="text" id="j_title" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Misal: Ujian Tulis">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Ruangan/Tempat Pelaksanaan Ukom</label>
-                    <textarea id="j_desc" required rows="3" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Contoh: Aula BPS Provinsi Bengkulu / Online via Zoom"></textarea>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi/Media</label>
+                    <input type="text" id="j_location" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Misal: Ruang Vicon BPS Provinsi / Zoom">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Warna Indikator Titik</label>
-                    <select id="j_color" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue">
-                        <option value="bps-orange">Oranye (Sedang Berlangsung / Mendesak)</option>
-                        <option value="bps-blue">Biru (Akan Datang / Aktif)</option>
-                        <option value="gray-400">Abu-abu (Selesai / Menunggu)</option>
-                    </select>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Keterangan Tambahan</label>
+                    <textarea id="j_desc" rows="3" class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" placeholder="Detail kegiatan..."></textarea>
                 </div>
                 <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-100">
                     <button type="button" onclick="closeFormJadwal()" class="px-5 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors">Batal</button>
-                    <button type="submit" id="btn-save-jadwal" class="px-6 py-2 text-white bg-bps-blue hover:bg-blue-800 rounded-lg font-medium transition-colors shadow-sm flex items-center gap-2">
-                        <span>Simpan</span>
+                    <button type="submit" class="px-6 py-2 text-white bg-bps-orange hover:bg-orange-600 rounded-lg font-medium transition-colors shadow-sm">
+                        Simpan
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Admin Login Modal -->
     <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 z-[80] hidden flex items-center justify-center px-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 sm:p-8 transform scale-95 transition-transform duration-300 relative">
-            <h3 class="text-2xl font-bold text-gray-900 mb-2">Login Admin</h3>
-            <p class="text-gray-500 text-sm mb-6">Gunakan admin / admin123</p>
-            <div class="w-12 h-1 bg-bps-blue mb-6"></div>
-            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                    <input type="text" id="login_username" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" autocomplete="username">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input type="password" id="login_password" required class="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-bps-blue focus:border-bps-blue" autocomplete="current-password">
-                    <p id="login_error" class="text-red-500 text-sm mt-2 hidden"><i class="fas fa-exclamation-circle"></i> Username atau password salah.</p>
-                </div>
-                <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-100">
-                    <button type="button" onclick="closeLoginModal()" class="px-5 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors">Batal</button>
-                    <button type="submit" class="px-6 py-2 text-white bg-bps-blue hover:bg-blue-800 rounded-lg font-medium transition-colors shadow-sm">Login</button>
-                </div>
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 sm:p-8 transform scale-95 transition-transform duration-300 relative text-center">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-bps-blue text-2xl">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Login Admin</h3>
+            <p class="text-sm text-gray-500 mb-6">Masukkan kata sandi untuk mengelola portal. (Demo: admin123)</p>
+            <form onsubmit="handleLogin(event)">
+                <input type="password" id="admin_password" required class="w-full border border-gray-300 rounded-lg p-2.5 mb-4 focus:ring-bps-blue focus:border-bps-blue text-center" placeholder="Kata Sandi">
+                <p id="login_error" class="text-red-500 text-sm hidden mb-4">Kata sandi salah!</p>
+                <button type="submit" class="w-full bg-bps-blue hover:bg-blue-800 text-white font-semibold py-2.5 rounded-lg transition-colors">
+                    Masuk
+                </button>
             </form>
         </div>
     </div>
 
+    <!-- Custom Alert/Confirm Modals -->
+    <div id="alertModal" class="fixed inset-0 bg-black bg-opacity-50 z-[90] hidden flex items-center justify-center px-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 transform scale-95 transition-transform duration-300 text-center">
+            <div id="alertIcon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"></div>
+            <h3 id="alertTitle" class="text-xl font-bold text-gray-900 mb-2">Info</h3>
+            <p id="alertMessage" class="text-gray-600 mb-6"></p>
+            <button onclick="closeAlert()" class="bg-bps-blue text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-800 transition-colors">OK</button>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-50 z-[90] hidden flex items-center justify-center px-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 transform scale-95 transition-transform duration-300 text-center">
+            <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Konfirmasi</h3>
+            <p id="confirmMessage" class="text-gray-600 mb-6">Apakah Anda yakin?</p>
+            <div class="flex justify-center gap-3">
+                <button onclick="closeConfirm()" class="px-5 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors">Batal</button>
+                <button id="btnConfirmExecute" class="px-5 py-2 text-white bg-red-500 hover:bg-red-600 rounded-lg font-medium transition-colors">Yakin</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // =============================================================
-        // KONFIGURASI APPS SCRIPT WEB APP URL
-        // Tempelkan URL Web App Apps Script Anda di bawah ini!
-        // 
-        // =============================================================
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw7oXsbh5H-QDyqPdLsv0ccRwKg4V3w6MF5Vh4iUWdMssTNP6VqRbc3OVftb1-9qKCHKw/exec"; 
+        // --- KONFIGURASI DATABASE GOOGLE SHEETS ---
+        // MASUKKAN WEB APP URL DARI GOOGLE APPS SCRIPT ANDA DI SINI
+        // CONTOH: const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycb.../exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyvEMqsPdspPPVfFvnapMxO-4GyYWwSYdH6KRnKxxyyKQdhTa5XVpVusa3JbEdbECE7/exec'; 
 
+        // State
         let isAdmin = false;
+        let pengumumanData = [];
+        let jadwalData = [];
+        let confirmAction = null;
 
-        // Data bawaan awal (Default / Initial Data)
-        let pengumumanData = [
-            {
-                id: 'p1',
-                date: '25 Juli 2026',
-                category: 'Info Penting',
-                tag: 'PENTING',
-                title: 'Pendaftaran Uji Kompetensi Resmi Dibuka',
-                certLink: 'https://drive.google.com/',
-                summary: 'Pendaftaran Uji Kompetensi Jabatan Fungsional periode 2026 telah resmi dibuka. Segera lengkapi berkas persyaratan.',
-                content: 'Diberitahukan kepada seluruh Aparatur Sipil Negara di lingkungan BPS Provinsi Bengkulu bahwa pendaftaran Uji Kompetensi Jabatan Fungsional untuk periode 2026 telah resmi dibuka mulai tanggal 1 Agustus 2026.\n\nPeserta diharapkan segera melengkapi dokumen-dokumen persyaratan yang dibutuhkan dan mengunggahnya melalui portal kepegawaian yang telah disediakan. Pastikan dokumen yang diunggah dapat terbaca dengan jelas dan berformat PDF.',
-                image: 'https://placehold.co/800x400/0B5E90/white?text=Pendaftaran+Dibuka'
-            },
-            {
-                id: 'p2',
-                date: '20 Juli 2026',
-                category: 'Berita',
-                tag: '',
-                title: 'Sosialisasi Teknis Ujian Berbasis Komputer',
-                certLink: '',
-                summary: 'Panitia akan mengadakan sosialisasi teknis terkait pelaksanaan ujian berbasis komputer pada pekan depan.',
-                content: 'Dalam rangka meminimalisir kendala teknis pada saat hari-H pelaksanaan, panitia akan menyelenggarakan sosialisasi penggunaan sistem ujian berbasis komputer (CBT).\n\nSosialisasi akan dilaksanakan secara daring melalui Zoom Meeting. Tautan Zoom akan dikirimkan ke email masing-masing peserta H-1 sebelum pelaksanaan sosialisasi.',
-                image: ''
-            }
-        ];
-
-        let jadwalData = [
-            {
-                id: 'j1',
-                date: '1 - 10 Agustus 2026',
-                time: '08.00 - 16.00 WIB',
-                title: 'Pendaftaran & Unggah Berkas',
-                desc: 'Aplikasi SIM-UKOM / Online',
-                color: 'bps-orange'
-            },
-            {
-                id: 'j2',
-                date: '12 - 15 Agustus 2026',
-                time: '08.00 - 15.00 WIB',
-                title: 'Seleksi Administrasi',
-                desc: 'Ruang Subbagian Kepegawaian BPS Provinsi Bengkulu',
-                color: 'bps-blue'
-            },
-            {
-                id: 'j3',
-                date: '20 Agustus 2026',
-                time: '09.00 WIB - Selesai',
-                title: 'Pengumuman Hasil Seleksi Administrasi',
-                desc: 'Portal Resmi BPS Provinsi Bengkulu',
-                color: 'gray-400'
-            },
-            {
-                id: 'j4',
-                date: '25 Agustus 2026',
-                time: '08.00 - 12.00 WIB',
-                title: 'Pelaksanaan Uji Kompetensi Tertulis',
-                desc: 'Aula Lantai 3 BPS Provinsi Bengkulu',
-                color: 'gray-400'
-            }
-        ];
-
-        // Initialize Application
+        // Initialization
         document.addEventListener('DOMContentLoaded', () => {
-            setupBackendStatus();
-            loadDataFromCloud();
-            setupMobileMenu();
-        });
-
-        function setupBackendStatus() {
-            const banner = document.getElementById('backend-status-banner');
-            if (SCRIPT_URL && SCRIPT_URL.trim() !== '') {
-                banner.className = "mt-20 bg-emerald-100 border-b border-emerald-200 text-emerald-800 text-xs py-2 px-4 text-center flex items-center justify-center gap-2";
-                banner.innerHTML = `<i class="fas fa-cloud text-emerald-600"></i><span><strong>Selamat Datang di Website Resmi Pengumuman Jadwal Uji Komptensi di BPS Provinsi Bengkulu..</strong> </span>`;
+            if (SCRIPT_URL === 'PASTE_WEB_APP_URL_ANDA_DISINI') {
+                document.getElementById('backend-status-text').innerHTML = '<strong>Peringatan:</strong> SCRIPT_URL belum diisi. Silakan edit file index.html dan masukkan Web App URL Anda.';
+                document.getElementById('backend-status-banner').className = 'mt-20 bg-red-100 border-b border-red-200 text-red-800 text-xs py-2 px-4 text-center flex items-center justify-center gap-2';
             } else {
-                banner.className = "mt-20 bg-amber-100 border-b border-amber-200 text-amber-800 text-xs py-2 px-4 text-center flex items-center justify-center gap-2";
-                banner.innerHTML = `<i class="fas fa-database text-amber-600"></i><span><strong>Status Penyimpanan:</strong> Menggunakan penyimpanan lokal. Tempelkan URL Google Apps Script pada variabel <code>https://script.google.com/macros/s/AKfycbyvTBlrV0qNRSwGdnCtzry28Es4SIPsQ9TNOtK9wv4ZeFyeV-dzKnaxMO0OMFx1VfM/exec</code> untuk mengaktifkan sinkronisasi otomatis.</span>`;
+                document.getElementById('backend-status-banner').classList.add('hidden');
+                loadServerData();
             }
-        }
-
-        // Fetch Data dari Google Apps Script Backend
-        async function loadDataFromCloud() {
-            // Load cache dari LocalStorage jika ada
-            const cachedP = localStorage.getItem('bps_pengumuman');
-            const cachedJ = localStorage.getItem('bps_jadwal');
-            if (cachedP) pengumumanData = JSON.parse(cachedP);
-            if (cachedJ) jadwalData = JSON.parse(cachedJ);
-
-            renderPengumuman();
-            renderJadwal();
-
-            if (!SCRIPT_URL || SCRIPT_URL.trim() === '') return;
-
-            const loadingEl = document.getElementById('pengumuman-loading');
-            loadingEl.classList.remove('hidden');
-
-            try {
-                const res = await fetch(SCRIPT_URL);
-                const result = await res.json();
-                
-                if (result.status === 'success') {
-                    if (result.pengumuman && result.pengumuman.length > 0) {
-                        pengumumanData = result.pengumuman;
-                        localStorage.setItem('bps_pengumuman', JSON.stringify(pengumumanData));
-                    }
-                    if (result.jadwal && result.jadwal.length > 0) {
-                        jadwalData = result.jadwal;
-                        localStorage.setItem('bps_jadwal', JSON.stringify(jadwalData));
-                    }
-                    renderPengumuman();
-                    renderJadwal();
-                }
-            } catch (err) {
-                console.warn("Gagal terhubung ke Apps Script, menggunakan data lokal:", err);
-            } finally {
-                loadingEl.classList.add('hidden');
-            }
-        }
-
-        // Sync Data ke Backend API
-        async function sendApiRequest(payload) {
-            // Update local state cache
-            localStorage.setItem('bps_pengumuman', JSON.stringify(pengumumanData));
-            localStorage.setItem('bps_jadwal', JSON.stringify(jadwalData));
-
-            if (!SCRIPT_URL || SCRIPT_URL.trim() === '') return true;
-
-            try {
-                const res = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await res.json();
-                if (result.status === 'success') {
-                    if (result.pengumuman) pengumumanData = result.pengumuman;
-                    if (result.jadwal) jadwalData = result.jadwal;
-                    localStorage.setItem('bps_pengumuman', JSON.stringify(pengumumanData));
-                    localStorage.setItem('bps_jadwal', JSON.stringify(jadwalData));
-                    renderPengumuman();
-                    renderJadwal();
-                    return true;
-                }
-            } catch (err) {
-                console.error("Error syncing with backend:", err);
-            }
-            return false;
-        }
-
-        function setupMobileMenu() {
+            
+            checkAdminState();
+            
+            // Setup Mobile Menu Toggle
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
-            const links = document.querySelectorAll('.mobile-link');
-
             btn.addEventListener('click', () => {
                 menu.classList.toggle('hidden');
             });
-
-            links.forEach(link => {
+            
+            // Close mobile menu on link click
+            document.querySelectorAll('.mobile-link').forEach(link => {
                 link.addEventListener('click', () => {
                     menu.classList.add('hidden');
                 });
             });
+
+            // Sticky Nav styling
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('main-nav');
+                if (window.scrollY > 10) {
+                    nav.classList.add('shadow-lg', 'bg-opacity-95', 'backdrop-blur-sm');
+                } else {
+                    nav.classList.remove('shadow-lg', 'bg-opacity-95', 'backdrop-blur-sm');
+                }
+            });
+        });
+
+        // --- FUNGSI KOMUNIKASI API GOOGLE SHEETS ---
+        async function fetchAPI(action, data = null, id = null) {
+            const formData = new URLSearchParams();
+            formData.append('action', action);
+            if (data) formData.append('data', JSON.stringify(data));
+            if (id) formData.append('id', id);
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (result.status !== 'success') throw new Error(result.message);
+                return result.data;
+            } catch (error) {
+                console.error('API Error:', error);
+                customAlert('Gagal', 'Terjadi kesalahan saat menghubungi database server.', 'error');
+                return null;
+            }
+        }
+
+        async function loadServerData() {
+            // Tampilkan loading state
+            document.getElementById('pengumuman-loading').classList.remove('hidden');
+            document.getElementById('empty-pengumuman').classList.add('hidden');
+            document.getElementById('pengumuman-container').innerHTML = '';
+            
+            document.getElementById('jadwal-container').innerHTML = '<div class="text-center py-4 text-gray-500"><i class="fas fa-spinner fa-spin"></i> Memuat jadwal dari database...</div>';
+
+            try {
+                // Fetch paralel untuk kecepatan
+                const [pData, jData] = await Promise.all([
+                    fetchAPI('getPengumuman'),
+                    fetchAPI('getJadwal')
+                ]);
+                
+                pengumumanData = pData || [];
+                jadwalData = jData || [];
+                
+            } catch (e) {
+                console.error("Gagal memuat data awal", e);
+            } finally {
+                document.getElementById('pengumuman-loading').classList.add('hidden');
+                renderPengumuman();
+                renderJadwal();
+            }
         }
 
         function renderPengumuman() {
@@ -699,53 +647,54 @@
             container.innerHTML = '';
             
             if (pengumumanData.length === 0) {
-                container.classList.add('hidden');
                 emptyState.classList.remove('hidden');
-                return;
-            }
-            
-            container.classList.remove('hidden');
-            emptyState.classList.add('hidden');
-
-            pengumumanData.forEach(item => {
-                const tagHtml = item.tag ? `<span class="bg-red-100 text-red-600 text-xs font-bold px-2.5 py-0.5 rounded ml-2">${item.tag}</span>` : '';
-                const imgHtml = item.image ? `<img src="${item.image}" alt="Cover" class="w-full h-48 object-cover">` : `<div class="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-300"><i class="fas fa-newspaper text-5xl"></i></div>`;
+                container.classList.add('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                container.classList.remove('hidden');
                 
-                const adminControls = isAdmin ? `
-                    <div class="absolute top-2 right-2 flex gap-2 z-10">
-                        <button onclick="editPengumuman('${item.id}', event)" class="bg-blue-500 hover:bg-blue-600 text-white w-8 h-8 rounded-full shadow flex items-center justify-center transition-colors">
-                            <i class="fas fa-edit text-xs"></i>
-                        </button>
-                        <button onclick="deletePengumuman('${item.id}', event)" class="bg-red-500 hover:bg-red-600 text-white w-8 h-8 rounded-full shadow flex items-center justify-center transition-colors">
-                            <i class="fas fa-trash text-xs"></i>
-                        </button>
-                    </div>
-                ` : '';
+                // Sort by newest (assuming newer items are added last or have IDs we can sort, let's reverse for demo)
+                const displayData = [...pengumumanData].reverse();
 
-                const cardHtml = `
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group relative flex flex-col h-full" onclick="openNewsModal('${item.id}')">
-                        ${adminControls}
-                        <div class="relative overflow-hidden">
-                            ${imgHtml}
-                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+                displayData.forEach(item => {
+                    let tagHTML = '';
+                    if (item.tag) {
+                        tagHTML = `<span class="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded shadow-sm">${item.tag}</span>`;
+                    }
+
+                    let imageIconHTML = item.image ? `<i class="fas fa-image text-gray-400" title="Ada Lampiran Gambar"></i>` : '';
+                    let certIconHTML = item.certLink ? `<i class="fas fa-file-download text-emerald-500" title="Ada Tautan Dokumen"></i>` : '';
+                    
+                    let adminControls = isAdmin ? `
+                        <div class="absolute top-2 right-2 flex gap-2 z-10">
+                            <button onclick="editPengumuman('${item.id}', event)" class="bg-blue-100 text-blue-600 hover:bg-blue-200 p-2 rounded-full shadow-sm" title="Edit"><i class="fas fa-edit"></i></button>
+                            <button onclick="deletePengumuman('${item.id}', event)" class="bg-red-100 text-red-600 hover:bg-red-200 p-2 rounded-full shadow-sm" title="Hapus"><i class="fas fa-trash"></i></button>
                         </div>
-                        <div class="p-6 flex flex-col flex-grow">
-                            <div class="flex items-center text-sm mb-3">
-                                <span class="text-bps-orange font-semibold">${item.category || 'Pengumuman'}</span>
-                                <span class="mx-2 text-gray-300">•</span>
-                                <span class="text-gray-500"><i class="far fa-calendar-alt mr-1"></i> ${item.date}</span>
-                                ${tagHtml}
+                    ` : '';
+
+                    const card = `
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-all cursor-pointer relative group flex flex-col h-full transform hover:-translate-y-1" onclick="openNewsModal('${item.id}')">
+                            ${adminControls}
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <span class="text-bps-orange text-sm font-semibold tracking-wide">${item.category}</span>
+                                </div>
+                                <div class="flex gap-2 items-center">
+                                    ${imageIconHTML}
+                                    ${certIconHTML}
+                                    ${tagHTML}
+                                </div>
                             </div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-bps-blue transition-colors line-clamp-2">${item.title}</h3>
-                            <p class="text-gray-600 line-clamp-3 mb-4">${item.summary}</p>
-                            <div class="mt-auto pt-4 border-t border-gray-100">
-                                <span class="text-bps-blue font-medium text-sm group-hover:underline">Baca selengkapnya <i class="fas fa-arrow-right ml-1 text-xs"></i></span>
+                            <p class="text-gray-600 text-sm mb-6 flex-grow line-clamp-3">${item.summary}</p>
+                            <div class="flex items-center text-gray-400 text-sm mt-auto pt-4 border-t border-gray-50">
+                                <i class="far fa-calendar-alt mr-2"></i> ${item.date}
                             </div>
                         </div>
-                    </div>
-                `;
-                container.innerHTML += cardHtml;
-            });
+                    `;
+                    container.insertAdjacentHTML('beforeend', card);
+                });
+            }
         }
 
         function renderJadwal() {
@@ -755,178 +704,194 @@
             container.innerHTML = '';
             
             if (jadwalData.length === 0) {
-                container.classList.add('hidden');
                 emptyState.classList.remove('hidden');
+                container.classList.add('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                container.classList.remove('hidden');
+                
+                jadwalData.forEach((item, index) => {
+                    let adminControls = isAdmin ? `
+                        <div class="absolute top-0 right-0 flex gap-2">
+                            <button onclick="editJadwal('${item.id}', event)" class="text-blue-500 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded text-xs transition-colors"><i class="fas fa-edit"></i> Edit</button>
+                            <button onclick="deleteJadwal('${item.id}', event)" class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2 py-1 rounded text-xs transition-colors"><i class="fas fa-trash"></i> Hapus</button>
+                        </div>
+                    ` : '';
+
+                    const isLast = index === jadwalData.length - 1;
+                    const nodeHTML = `
+                        <div class="relative pl-8 group">
+                            <!-- Timeline Dot -->
+                            <div class="absolute -left-2.5 top-1.5 w-5 h-5 bg-white border-4 border-bps-orange rounded-full group-hover:scale-110 group-hover:border-bps-blue transition-transform z-10 shadow-sm"></div>
+                            
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 hover:border-blue-100 hover:bg-blue-50/50 transition-colors relative">
+                                ${adminControls}
+                                <div class="text-sm font-bold text-bps-orange mb-1 bg-orange-100 inline-block px-2 py-1 rounded-md">${item.date}</div>
+                                <h4 class="text-lg font-bold text-gray-900 mt-2 mb-1 pr-16">${item.title}</h4>
+                                <div class="text-sm text-gray-500 mb-3 flex items-center gap-2">
+                                    <i class="far fa-clock"></i> Pukul: ${item.time}
+                                </div>
+                                <div class="flex items-start gap-2 text-sm text-gray-600 bg-white p-3 rounded-lg border border-gray-100 shadow-sm mb-2">
+                                    <i class="fas fa-map-marker-alt text-bps-blue mt-1"></i>
+                                    <span><strong>Lokasi/Media:</strong><br>${item.location}</span>
+                                </div>
+                                ${item.desc ? `<p class="text-sm text-gray-600 mt-2 italic">${item.desc}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', nodeHTML);
+                });
+            }
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.children[0].classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeAllModals() {
+            const modals = ['newsModal', 'formPengumumanModal', 'formJadwalModal', 'loginModal', 'alertModal', 'confirmModal'];
+            modals.forEach(id => {
+                const modal = document.getElementById(id);
+                if (!modal.classList.contains('hidden')) {
+                    modal.classList.add('opacity-0');
+                    modal.children[0].classList.add('scale-95');
+                    setTimeout(() => modal.classList.add('hidden'), 300);
+                }
+            });
+        }
+
+        function closeModal() { closeAllModals(); }
+        function closeFormPengumuman() { closeAllModals(); document.getElementById('formPengumuman').reset(); removeImage(); }
+        function closeFormJadwal() { closeAllModals(); document.getElementById('formJadwal').reset(); }
+        function closeLoginModal() { closeAllModals(); document.getElementById('login_error').classList.add('hidden'); }
+        function closeAlert() { closeAllModals(); }
+        function closeConfirm() { closeAllModals(); confirmAction = null; }
+
+        function customAlert(title, message, type = 'info') {
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertMessage').innerText = message;
+            const iconContainer = document.getElementById('alertIcon');
+            if(type === 'success') {
+                iconContainer.className = 'w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl bg-green-100 text-green-500';
+                iconContainer.innerHTML = '<i class="fas fa-check"></i>';
+            } else if (type === 'error') {
+                iconContainer.className = 'w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl bg-red-100 text-red-500';
+                iconContainer.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                iconContainer.className = 'w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl bg-blue-100 text-blue-500';
+                iconContainer.innerHTML = '<i class="fas fa-info"></i>';
+            }
+            openModal('alertModal');
+        }
+
+        function customConfirm(message, action) {
+            document.getElementById('confirmMessage').innerText = message;
+            confirmAction = action;
+            openModal('confirmModal');
+        }
+
+        document.getElementById('btnConfirmExecute').addEventListener('click', () => {
+            if (confirmAction) confirmAction();
+            closeConfirm();
+        });
+
+        function checkAdminState() {
+            const adminLocal = localStorage.getItem('bps_admin_mode');
+            isAdmin = adminLocal === 'true';
+            
+            const desktopIndicator = document.getElementById('admin-status-indicator');
+            const mobileIndicator = document.getElementById('mobile-admin-indicator');
+            const desktopLogout = document.getElementById('admin-logout-btn');
+            const mobileLogout = document.getElementById('mobile-logout-btn');
+            const addPBtn = document.getElementById('admin-add-pengumuman');
+            const addJBtn = document.getElementById('admin-add-jadwal');
+
+            if (isAdmin) {
+                desktopIndicator.classList.remove('hidden');
+                mobileIndicator.classList.remove('hidden');
+                desktopLogout.classList.remove('hidden');
+                mobileLogout.classList.remove('hidden');
+                addPBtn.classList.remove('hidden');
+                addJBtn.classList.remove('hidden');
+            } else {
+                desktopIndicator.classList.add('hidden');
+                mobileIndicator.classList.add('hidden');
+                desktopLogout.classList.add('hidden');
+                mobileLogout.classList.add('hidden');
+                addPBtn.classList.add('hidden');
+                addJBtn.classList.add('hidden');
+            }
+            // Re-render to show/hide admin buttons on cards
+            renderPengumuman();
+            renderJadwal();
+        }
+
+        function openLoginModal() {
+            if (isAdmin) {
+                customAlert('Mode Admin', 'Anda saat ini sudah login sebagai Admin.', 'info');
                 return;
             }
+            document.getElementById('admin_password').value = '';
+            document.getElementById('login_error').classList.add('hidden');
+            openModal('loginModal');
+        }
 
-            container.classList.remove('hidden');
-            emptyState.classList.add('hidden');
+        function handleLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('admin_password').value;
+            if (pass === 'admin123') { // Simple demo auth
+                localStorage.setItem('bps_admin_mode', 'true');
+                checkAdminState();
+                closeLoginModal();
+                customAlert('Berhasil', 'Login Admin berhasil diaktifkan.', 'success');
+            } else {
+                document.getElementById('login_error').classList.remove('hidden');
+            }
+        }
 
-            jadwalData.forEach((item) => {
-                const colorClass = item.color || 'bps-blue';
-                
-                const adminControls = isAdmin ? `
-                    <div class="absolute top-0 right-0 flex gap-2">
-                        <button onclick="editJadwal('${item.id}')" class="text-gray-400 hover:text-blue-500 transition-colors bg-white w-8 h-8 rounded-full border border-gray-100 shadow-sm flex items-center justify-center">
-                            <i class="fas fa-edit text-xs"></i>
-                        </button>
-                        <button onclick="deleteJadwal('${item.id}')" class="text-gray-400 hover:text-red-500 transition-colors bg-white w-8 h-8 rounded-full border border-gray-100 shadow-sm flex items-center justify-center">
-                            <i class="fas fa-trash text-xs"></i>
-                        </button>
-                    </div>
-                ` : '';
-
-                const timeBadge = item.time ? `
-                    <span class="inline-block px-3 py-1 bg-blue-50 text-bps-blue rounded-md text-sm font-medium border border-blue-100">
-                        <i class="far fa-clock mr-1 text-bps-blue"></i> ${item.time}
-                    </span>
-                ` : '';
-
-                const itemHtml = `
-                    <div class="relative pl-6 sm:pl-8">
-                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-${colorClass} border-4 border-white shadow-sm z-10"></div>
-                        <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative">
-                            ${adminControls}
-                            <div class="flex flex-wrap items-center gap-2 mb-3">
-                                <span class="inline-block px-3 py-1 bg-gray-50 text-gray-600 rounded-md text-sm font-medium border border-gray-100">
-                                    <i class="far fa-calendar-alt mr-1 text-bps-orange"></i> ${item.date}
-                                </span>
-                                ${timeBadge}
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-900 mb-2 pr-16">${item.title}</h3>
-                            <p class="text-gray-600 text-sm flex items-start gap-2">
-                                <i class="fas fa-map-marker-alt text-bps-orange mt-1 flex-shrink-0"></i>
-                                <span><strong>Ruangan/Tempat Pelaksanaan Ukom:</strong> ${item.desc}</span>
-                            </p>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += itemHtml;
+        function handleLogout() {
+            customConfirm('Yakin ingin keluar dari mode Admin?', () => {
+                localStorage.setItem('bps_admin_mode', 'false');
+                checkAdminState();
+                customAlert('Logout', 'Anda telah keluar dari mode Admin.', 'info');
             });
         }
 
         function openNewsModal(id) {
-            const news = pengumumanData.find(p => p.id === id);
-            if (!news) return;
+            const item = pengumumanData.find(p => p.id === id);
+            if (!item) return;
 
-            document.getElementById('modalMeta').innerText = `${news.category || 'Pengumuman'} • ${news.date}`;
-            document.getElementById('modalTitle').innerText = news.title;
-            document.getElementById('modalContent').innerText = news.content;
+            document.getElementById('modalMeta').innerText = `${item.date} | ${item.category}`;
+            document.getElementById('modalTitle').innerText = item.title;
+            document.getElementById('modalContent').innerText = item.content;
             
             const imgEl = document.getElementById('modalImage');
-            if (news.image) {
-                imgEl.src = news.image;
+            if (item.image) {
+                imgEl.src = item.image;
                 imgEl.classList.remove('hidden');
             } else {
-                imgEl.classList.add('hidden');
                 imgEl.src = '';
+                imgEl.classList.add('hidden');
             }
 
             const certContainer = document.getElementById('modalCertContainer');
             const certLink = document.getElementById('modalCertLink');
-            if (news.certLink && news.certLink.trim() !== '') {
-                certLink.href = news.certLink;
+            if (item.certLink) {
+                certLink.href = item.certLink;
                 certContainer.classList.remove('hidden');
             } else {
                 certContainer.classList.add('hidden');
-                certLink.href = '#';
             }
 
-            const modal = document.getElementById('newsModal');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('div').classList.remove('scale-95');
-            }, 10);
-            document.body.style.overflow = 'hidden';
+            openModal('newsModal');
         }
 
-        function closeModal() {
-            const modal = document.getElementById('newsModal');
-            modal.classList.add('opacity-0');
-            modal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-            document.body.style.overflow = 'auto';
-        }
-
-        function openFormPengumuman() {
-            document.getElementById('formPengumuman').reset();
-            document.getElementById('p_id').value = '';
-            document.getElementById('p_category').value = 'Pengumuman';
-            document.getElementById('formPTitle').innerText = 'Tambah Pengumuman';
-            removeImage();
-            
-            const modal = document.getElementById('formPengumumanModal');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('div').classList.remove('scale-95');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeFormPengumuman() {
-            const modal = document.getElementById('formPengumumanModal');
-            modal.classList.add('opacity-0');
-            modal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-            document.body.style.overflow = 'auto';
-        }
-
-        function openFormJadwal() {
-            document.getElementById('formJadwal').reset();
-            document.getElementById('j_id').value = '';
-            document.getElementById('j_color').value = 'bps-orange';
-            document.getElementById('formJTitle').innerText = 'Tambah Jadwal';
-            
-            const modal = document.getElementById('formJadwalModal');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('div').classList.remove('scale-95');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeFormJadwal() {
-            const modal = document.getElementById('formJadwalModal');
-            modal.classList.add('opacity-0');
-            modal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-            document.body.style.overflow = 'auto';
-        }
-
-        function openLoginModal() {
-            if (isAdmin) return;
-            document.getElementById('loginForm').reset();
-            document.getElementById('login_error').classList.add('hidden');
-            
-            const modal = document.getElementById('loginModal');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('div').classList.remove('scale-95');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLoginModal() {
-            const modal = document.getElementById('loginModal');
-            modal.classList.add('opacity-0');
-            modal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-            document.body.style.overflow = 'auto';
-        }
-
+        // Image handling for Pengumuman
         function previewImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -952,203 +917,134 @@
             document.getElementById('p_image_remove').classList.add('hidden');
         }
 
-        function handleLogin(event) {
-            event.preventDefault();
-            const user = document.getElementById('login_username').value;
-            const pass = document.getElementById('login_password').value;
-
-            if (user === 'admin' && pass === 'admin123') {
-                isAdmin = true;
-                closeLoginModal();
-                updateAdminUI();
-            } else {
-                document.getElementById('login_error').classList.remove('hidden');
-            }
+        // Form Handlers
+        function openFormPengumuman() {
+            document.getElementById('formPTitle').innerText = 'Tambah Pengumuman Baru';
+            document.getElementById('formPengumuman').reset();
+            document.getElementById('p_id').value = '';
+            removeImage();
+            openModal('formPengumumanModal');
         }
 
-        function handleLogout() {
-            isAdmin = false;
-            updateAdminUI();
-        }
+        async function savePengumuman(e) {
+            e.preventDefault();
+            const btnSave = document.getElementById('btn-save-pengumuman');
+            const originalText = btnSave.innerHTML;
+            btnSave.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+            btnSave.disabled = true;
 
-        function updateAdminUI() {
-            const addP = document.getElementById('admin-add-pengumuman');
-            const addJ = document.getElementById('admin-add-jadwal');
-            const logoutDesktop = document.getElementById('admin-logout-btn');
-            const logoutMobile = document.getElementById('mobile-logout-btn');
-            const indDesktop = document.getElementById('admin-status-indicator');
-            const indMobile = document.getElementById('mobile-admin-indicator');
-
-            if (isAdmin) {
-                addP.classList.remove('hidden');
-                addJ.classList.remove('hidden');
-                logoutDesktop.classList.remove('hidden');
-                logoutMobile.classList.remove('hidden');
-                indDesktop.classList.remove('hidden');
-                indMobile.classList.remove('hidden');
-            } else {
-                addP.classList.add('hidden');
-                addJ.classList.add('hidden');
-                logoutDesktop.classList.add('hidden');
-                logoutMobile.classList.add('hidden');
-                indDesktop.classList.add('hidden');
-                indMobile.classList.add('hidden');
-            }
-
-            renderPengumuman();
-            renderJadwal();
-        }
-
-        async function savePengumuman(event) {
-            event.preventDefault();
-            const btn = document.getElementById('btn-save-pengumuman');
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Menyimpan...`;
-            btn.disabled = true;
-
-            const id = document.getElementById('p_id').value || 'p_' + Date.now();
-            
+            const id = document.getElementById('p_id').value;
             const newData = {
-                id: id,
+                id: id || '', // ID kosong berarti data baru
                 date: document.getElementById('p_date').value,
                 category: document.getElementById('p_category').value,
                 tag: document.getElementById('p_tag').value,
                 title: document.getElementById('p_title').value,
                 certLink: document.getElementById('p_cert_link').value,
+                image: document.getElementById('p_image_base64').value,
                 summary: document.getElementById('p_summary').value,
-                content: document.getElementById('p_content').value,
-                image: document.getElementById('p_image_base64').value
+                content: document.getElementById('p_content').value
             };
 
-            const existingIndex = pengumumanData.findIndex(p => p.id === id);
-            if (existingIndex >= 0) {
-                pengumumanData[existingIndex] = newData;
-            } else {
-                pengumumanData.unshift(newData);
-            }
-
-            renderPengumuman();
+            // Simpan ke API
+            const savedData = await fetchAPI('savePengumuman', newData);
             
-            await sendApiRequest({
-                action: 'save_pengumuman',
-                item: newData
-            });
-
-            btn.innerHTML = `<span>Simpan</span>`;
-            btn.disabled = false;
-            closeFormPengumuman();
+            if (savedData) {
+                if (id) {
+                    const index = pengumumanData.findIndex(p => p.id === id);
+                    if(index !== -1) pengumumanData[index] = savedData;
+                } else {
+                    pengumumanData.push(savedData);
+                }
+                renderPengumuman();
+                closeFormPengumuman();
+                customAlert('Sukses', 'Data pengumuman berhasil disimpan ke database Google Sheets.', 'success');
+            }
+            
+            btnSave.innerHTML = originalText;
+            btnSave.disabled = false;
         }
 
-        function editPengumuman(id, event) {
+        function deletePengumuman(id, event) {
             event.stopPropagation();
-            const data = pengumumanData.find(p => p.id === id);
-            if (!data) return;
-
-            document.getElementById('p_id').value = data.id;
-            document.getElementById('p_date').value = data.date;
-            document.getElementById('p_category').value = data.category || 'Pengumuman';
-            document.getElementById('p_tag').value = data.tag || '';
-            document.getElementById('p_title').value = data.title;
-            document.getElementById('p_cert_link').value = data.certLink || '';
-            document.getElementById('p_summary').value = data.summary;
-            document.getElementById('p_content').value = data.content;
-            
-            if (data.image) {
-                document.getElementById('p_image_base64').value = data.image;
-                document.getElementById('p_image_preview').src = data.image;
-                document.getElementById('p_image_preview').classList.remove('hidden');
-                document.getElementById('p_image_placeholder').classList.add('hidden');
-                document.getElementById('p_image_remove').classList.remove('hidden');
-            } else {
-                removeImage();
-            }
-
-            document.getElementById('formPTitle').innerText = 'Edit Pengumuman';
-            
-            const modal = document.getElementById('formPengumumanModal');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('div').classList.remove('scale-95');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        async function deletePengumuman(id, event) {
-            event.stopPropagation();
-            pengumumanData = pengumumanData.filter(p => p.id !== id);
-            renderPengumuman();
-
-            await sendApiRequest({
-                action: 'delete_pengumuman',
-                id: id
+            customConfirm('Anda yakin ingin menghapus pengumuman ini dari database?', async () => {
+                const success = await fetchAPI('deletePengumuman', null, id);
+                if (success) {
+                    pengumumanData = pengumumanData.filter(p => p.id !== id);
+                    renderPengumuman();
+                    customAlert('Dihapus', 'Pengumuman berhasil dihapus.', 'info');
+                }
             });
         }
 
-        async function saveJadwal(event) {
-            event.preventDefault();
-            const btn = document.getElementById('btn-save-jadwal');
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Menyimpan...`;
+        function openFormJadwal() {
+            document.getElementById('formJTitle').innerText = 'Tambah Jadwal Baru';
+            document.getElementById('formJadwal').reset();
+            document.getElementById('j_id').value = '';
+            openModal('formJadwalModal');
+        }
+
+        function editJadwal(id, event) {
+            event.stopPropagation();
+            const item = jadwalData.find(j => j.id === id);
+            if(!item) return;
+
+            document.getElementById('formJTitle').innerText = 'Edit Jadwal';
+            document.getElementById('j_id').value = item.id;
+            document.getElementById('j_date').value = item.date;
+            document.getElementById('j_time').value = item.time;
+            document.getElementById('j_title').value = item.title;
+            document.getElementById('j_location').value = item.location;
+            document.getElementById('j_desc').value = item.desc || '';
+
+            openModal('formJadwalModal');
+        }
+
+        async function saveJadwal(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
             btn.disabled = true;
 
-            const id = document.getElementById('j_id').value || 'j_' + Date.now();
-            
+            const id = document.getElementById('j_id').value;
             const newData = {
-                id: id,
+                id: id || '',
                 date: document.getElementById('j_date').value,
                 time: document.getElementById('j_time').value,
                 title: document.getElementById('j_title').value,
-                desc: document.getElementById('j_desc').value,
-                color: document.getElementById('j_color').value
+                location: document.getElementById('j_location').value,
+                desc: document.getElementById('j_desc').value
             };
 
-            const existingIndex = jadwalData.findIndex(j => j.id === id);
-            if (existingIndex >= 0) {
-                jadwalData[existingIndex] = newData;
-            } else {
-                jadwalData.push(newData);
+            // Simpan ke API
+            const savedData = await fetchAPI('saveJadwal', newData);
+
+            if (savedData) {
+                if (id) {
+                    const index = jadwalData.findIndex(j => j.id === id);
+                    if(index !== -1) jadwalData[index] = savedData;
+                } else {
+                    jadwalData.push(savedData);
+                }
+                renderJadwal();
+                closeFormJadwal();
+                customAlert('Sukses', 'Data jadwal berhasil disimpan ke database Google Sheets.', 'success');
             }
-
-            renderJadwal();
-
-            await sendApiRequest({
-                action: 'save_jadwal',
-                item: newData
-            });
-
-            btn.innerHTML = `<span>Simpan</span>`;
-            btn.disabled = false;
-            closeFormJadwal();
-        }
-
-        function editJadwal(id) {
-            const data = jadwalData.find(j => j.id === id);
-            if (!data) return;
-
-            document.getElementById('j_id').value = data.id;
-            document.getElementById('j_date').value = data.date;
-            document.getElementById('j_time').value = data.time || '';
-            document.getElementById('j_title').value = data.title;
-            document.getElementById('j_desc').value = data.desc;
-            document.getElementById('j_color').value = data.color || 'bps-orange';
-
-            document.getElementById('formJTitle').innerText = 'Edit Jadwal';
             
-            const modal = document.getElementById('formJadwalModal');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('div').classList.remove('scale-95');
-            }, 10);
-            document.body.style.overflow = 'hidden';
+            btn.innerHTML = originalText;
+            btn.disabled = false;
         }
 
-        async function deleteJadwal(id) {
-            jadwalData = jadwalData.filter(j => j.id !== id);
-            renderJadwal();
-
-            await sendApiRequest({
-                action: 'delete_jadwal',
-                id: id
+        function deleteJadwal(id, event) {
+            event.stopPropagation();
+            customConfirm('Anda yakin ingin menghapus jadwal ini dari database?', async () => {
+                const success = await fetchAPI('deleteJadwal', null, id);
+                if (success) {
+                    jadwalData = jadwalData.filter(j => j.id !== id);
+                    renderJadwal();
+                    customAlert('Dihapus', 'Jadwal berhasil dihapus.', 'info');
+                }
             });
         }
     </script>
